@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
+const profileRouter = require("./routes/profile");
 
 const app = express();
 const mongoose = require("mongoose");
@@ -62,6 +63,7 @@ app.use(passport.session()); // persistent login sessions
 
 require("./routes/authenticate")(app, passport);
 app.use("/", indexRouter);
+app.use("/profile", profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

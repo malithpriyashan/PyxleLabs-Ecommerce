@@ -5655,3 +5655,197 @@ p.checkout-coupon input[type="text"]:focus {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/*----------------------------------------*/
+/*  18. Profile CSS START
+/*----------------------------------------*/
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  padding: 0px;
+  height: fit-content;
+}
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: blueviolet;
+  flex-wrap: wrap;
+  height: fit-content;
+
+  width: 100%;
+}
+.flex-container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.flex-container > div {
+  background-color: #f1f1f1;
+
+  margin: 10px;
+}
+.side {
+  width: 25%;
+  height: 400px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 20px;
+  color: #000;
+}
+.side li {
+  list-style-type: none;
+}
+.side a {
+  text-decoration: none;
+}
+.mid {
+  width: 60%;
+  height: 900px;
+}
+
+@media screen and (max-width: 500px) {
+  .profile {
+    display: flex;
+    background-color: red;
+    padding: 20px;
+  }
+  .flex-container {
+    display: flex;
+    flex-direction: column;
+
+    background-color: DodgerBlue;
+    flex-wrap: wrap;
+    height: fit-content;
+    width: 100%;
+  }
+  .flex-container .side,
+  .flex-container .mid {
+    width: 100%;
+    height: 700px;
+    margin: 0px;
+    margin-bottom: 10px;
+  }
+}
+
+/*----------------------------------------*/
+/*  19. profile-myaccount    CSS START
+/*----------------------------------------*/
+.account-login {
+  padding: 0px;
+  border: 2px solid #eaedff;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .account-login {
+    padding: 50px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .account-login {
+    padding: 40px;
+  }
+}
+@media (max-width: 767px) {
+  .account-login {
+    padding: 30px;
+  }
+}
+.account-login h3 {
+  font-size: 30px;
+}
+
+.account-login input {
+  width: 100%;
+  height: 60px;
+  border: 2px solid #eaedff;
+  color: #6f7172;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.account-login input:focus {
+  border-color: #222;
+}
+
+.account-login input::placeholder,
+.account-login input::-moz-placeholder {
+  color: #6f7172;
+}
+
+.account-login label {
+  color: #222;
+  display: block;
+}
+
+.account-login label span {
+  color: red;
+}
+
+.gender-block {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.gender-block label {
+  display: inline;
+}
+.gender-block input {
+  width: 12px;
+  height: 12px;
+  margin-right: 10px;
+}
+.login-action input {
+  width: inherit;
+  height: auto;
+}
+
+.login-action label {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.or-divide {
+  border-top: 2px solid #eaedff;
+  margin: 40px 0;
+  text-align: center;
+  position: relative;
+}
+
+.or-divide span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9px;
+  background: #ffffff;
+  display: inline-block;
+  width: 40px;
+  margin: auto;
+  line-height: 1;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .account-login {
+    float: none;
+  }
+}
+.account-login a {
+  color: #222;
+}
+
+.account-login a:hover {
+  color: #fcb700;
+}
+
+@media (max-width: 767px) {
+  .log-rem {
+    float: none;
+    margin-bottom: 10px;
+    display: block;
+  }
+}
