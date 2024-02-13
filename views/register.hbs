@@ -372,6 +372,49 @@
                 <h3 class="text-center mb-60">Signup From Here</h3>
                 <form action="/register" method="post">
 
+                  <label for="name">Name <span>**</span></label>
+                  {{#if errors}}
+                    <input
+                      id="name"
+                      type="text"
+                      placeholder="Name"
+                      name="name"
+                      value={{user.name}}
+                    />
+
+                  {{else}}
+                    <input
+                      id="name"
+                      type="text"
+                      placeholder="name"
+                      name="name"
+                    />
+                  {{/if}}
+                  {{#if errors.name}}
+                    <span class="text-danger">{{errors.name.msg}}</span>
+                  {{/if}}
+                  <label for="username">User Name<span>**</span></label>
+                  {{#if errors}}
+                    <input
+                      id="username"
+                      type="text"
+                      placeholder="User Name"
+                      name="username"
+                      value={{username}}
+                    />
+
+                  {{else}}
+                    <input
+                      id="username"
+                      type="text"
+                      placeholder="User Name"
+                      name="username"
+                    />
+                  {{/if}}
+                  {{#if errors.username}}
+                    <span class="text-danger">{{errors.username.msg}}</span>
+                  {{/if}}
+
                   <label for="email-id">Email Address <span>**</span></label>
                   {{#if errors}}
                     <input
@@ -379,7 +422,7 @@
                       type="text"
                       placeholder="Email address..."
                       name="email"
-                      value={{user.local.email}}
+                      value={{user.email}}
                     />
 
                   {{else}}
@@ -418,14 +461,14 @@
                       class="text-danger"
                     >{{errors.confirm_password.msg}}</span>
                   {{/if}}
-                  <label for="pass">Phone <span>**</span></label>
+                  <label for="phone">Phone <span>**</span></label>
                   {{#if errors}}
                     <input
                       id="phone"
                       type="text"
                       placeholder="phone number"
                       name="phone"
-                      value={{user.local.phone}}
+                      value={{user.phone}}
                     />
                   {{else}}
                     <input
@@ -439,14 +482,14 @@
                   {{#if errors.phone}}
                     <span class="text-danger">{{errors.phone.msg}}</span>
                   {{/if}}
-                  <label for="pass">Address <span>**</span></label>
+                  <label for="address">Address <span>**</span></label>
                   {{#if errors}}
                     <input
                       id="address"
                       type="text"
                       placeholder="Address"
                       name="address"
-                      value={{user.local.address}}
+                      value={{user.address}}
                     />
                   {{else}}
                     <input

@@ -3,18 +3,22 @@ const Schema = mongoose.Schema;
 var bcrypt = require("bcrypt");
 
 var userSchema = new Schema({
-  local: {
-    email: { type: String, unique: true },
-    password: { type: String },
-    phone: { type: String },
-    address: { type: String },
-  },
-  google: {
-    id: String,
-    //token: String,
-    email: String,
-    name: String,
-  },
+  name: { type: String },
+  email: { type: String, unique: true },
+  gender: { type: String },
+  phone: { type: String },
+  address: { type: String },
+  accounts: [
+    {
+      type: { type: String },
+      username: { type: String },
+      password: { type: String },
+    },
+    {
+      type: { type: String },
+      providerid: { type: String },
+    },
+  ],
 });
 
 userSchema.methods.generateHash = function (password) {
@@ -22,7 +26,7 @@ userSchema.methods.generateHash = function (password) {
 };
 
 userSchema.methods.validPassword = function (password) {
-  return bcrypt.compare(password, this.local.password);
+  return bcrypt.compare(password, this.accounts[0].password);
 };
 
 module.exports = mongoose.model("User", userSchema);

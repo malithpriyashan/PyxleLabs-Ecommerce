@@ -371,7 +371,7 @@
               <div class="basic-login">
                 <h3 class="text-center mb-60">Login From Here</h3>
                 <form action="/login" method="post">
-                  <label for="name">Email Address <span>**</span></label>
+                  <label for="email">Email Address <span>**</span></label>
                   {{log this}}
                   {{#if errors}}
                     <input
@@ -379,7 +379,7 @@
                       type="text"
                       placeholder="Email address..."
                       name="email"
-                      value={{user.local.email}}
+                      value={{user.email}}
                     />
 
                   {{else}}

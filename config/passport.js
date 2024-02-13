@@ -31,11 +31,14 @@ module.exports = async function (passport) {
       async (req, email, password, done) => {
         try {
           const newUser = new User();
-          newUser.local.email = email;
-          newUser.local.password = await newUser.generateHash(password);
+          newUser.accounts = [{}];
+          newUser.name = req.body.name;
+          newUser.accounts[0].username = req.body.username;
+          newUser.email = email;
+          newUser.accounts[0].password = await newUser.generateHash(password);
           console.log(req.body.phone);
-          newUser.local.phone = req.body.phone;
-          newUser.local.address = req.body.address;
+          newUser.phone = req.body.phone;
+          newUser.address = req.body.address;
           await newUser.save();
           return done(null, newUser);
         } catch (err) {
@@ -55,7 +58,7 @@ module.exports = async function (passport) {
       },
       async (req, email, password, done) => {
         try {
-          const user = await User.findOne({ "local.email": email });
+          const user = await User.findOne({ email: email });
           if (!user) {
             return done(null, false);
           }
@@ -81,7 +84,11 @@ module.exports = async function (passport) {
       },
       async (request, accessToken, refreshToken, profile, done) => {
         try {
-          const user = await User.findOne({ "google.id": profile.id });
+          const user = await User.findOne({
+            "accounts.type": "Google",
+            "accounts.providerid": profile.id,
+            //"accounts[0].providerid": profile.id,
+          });
 
           if (user) {
             // User found, log them in
@@ -89,12 +96,14 @@ module.exports = async function (passport) {
           } else {
             // Create a new user
             const newUser = new User({
-              google: {
-                id: profile.id,
-                //token: accesstoken, // Assuming you want to store accessToken here
-                name: profile.displayName,
-                email: profile.emails[0].value,
-              },
+              name: profile.displayName,
+              email: profile.emails[0].value,
+              accounts: [
+                {
+                  type: "Google",
+                  providerid: profile.id,
+                },
+              ],
             });
 
             await newUser.save();

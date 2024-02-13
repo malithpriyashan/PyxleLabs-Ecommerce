@@ -35,10 +35,14 @@ module.exports = function (app, passport) {
       const errors = validationResult(req);
       console.log(errors);
       const user = new User({
-        local: {
-          email: req.body.email,
-          password: req.body.password,
-        },
+        accounts: [
+          {
+            local: {
+              email: req.body.email,
+              password: req.body.password,
+            },
+          },
+        ],
       });
       if (!errors.isEmpty()) {
         return res.render("login", { user: user, errors: errors.mapped() }); // Render errors from req.errors
@@ -58,19 +62,30 @@ module.exports = function (app, passport) {
   app.post(
     "/register",
     [
+      check("name")
+        .isLength({ min: 1, max: 50 })
+        .isAlpha()
+        .escape()
+        .trim()
+        .withMessage("Name Should not contain letters or symbols."),
+      check("username")
+        .isLength({ min: 1, max: 30 })
+        .escape()
+        .trim()
+        .withMessage("User Name is Invalid."),
       check("email")
         .isEmail()
         .normalizeEmail()
         .isLength({ min: 5, max: 50 })
         .escape()
         .trim()
-        .withMessage("Invalid email address.")
-        .custom(async (value) => {
-          const existingUser = await User.find({ local: { email: value } });
-          if (existingUser) {
-            throw new Error("E-mail already in use");
-          }
-        }),
+        .withMessage("Invalid email address."),
+      // .custom(async (value) => {
+      //   const existingUser = await User.find({ email: value });
+      //   if (existingUser) {
+      //     throw new Error("E-mail already in use");
+      //   }
+      // }),
       check("password")
         .isLength({ min: 8, max: 50 })
         .matches("[0-9]")
@@ -89,6 +104,7 @@ module.exports = function (app, passport) {
         .withMessage("Password confirmation does not match password"),
       check("phone")
         .isLength({ min: 8, max: 50 })
+        //change this
         .isNumeric()
         .trim()
         .escape()
@@ -103,15 +119,35 @@ module.exports = function (app, passport) {
       const errors = validationResult(req);
       console.log(errors);
       const user = new User({
-        local: {
-          email: req.body.email,
-          password: req.body.password,
-          phone: req.body.phone,
-          address: req.body.address,
-        },
+        // local: {
+        //   email: req.body.email,
+        //   password: req.body.password,
+        //   phone: req.body.phone,
+        //   address: req.body.address,
+        // },
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        address: req.body.address,
+        accounts: [
+          {
+            type: "Local",
+            username: req.body.username,
+            password: req.body.password,
+          },
+        ],
       });
+      res.locals.username = req.body.username;
+      //let uname = req.body.username;
+      //console.log("user name is" + uname + "andd" + req.body.username);
+      console.log(res.locals.username);
+      console.log(typeof res.locals.username);
       if (!errors.isEmpty()) {
-        return res.render("register", { user: user, errors: errors.mapped() }); // Render errors from req.errors
+        return res.render("register", {
+          user: user,
+          username: res.locals.username,
+          errors: errors.mapped(),
+        }); // Render errors from req.errors
       }
       next();
     },
